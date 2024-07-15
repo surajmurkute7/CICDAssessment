@@ -17,8 +17,3 @@ services:
       - 37:8080
  
 
-  calc-service:
-    build: surajmurkute/calc
-    ports:
-      - 45:8080
-
