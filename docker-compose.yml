@@ -4,16 +4,32 @@ services:
     build: .
     ports:
       - 56:8080
+    volumes:
+      - spring-vol:/usr/src/myapp
+
+volumes:
+  spring-vol:
+    driver: local
       
   cafe-service:
     build: surajmurkute/cafe
     ports:
       - 32:8080
+    volumes:
+      - cafe-vol:/usr/src/cafe
 
+volumes:
+  cafe-vol:
+    driver: local
 
   health-service:
     build: surajmurkute/healthcenter
     ports:
       - 37:8080
- 
+     volumes:
+      - health-vol:/usr/src/health
+
+volumes:
+  health-vol:
+    driver: local
 
