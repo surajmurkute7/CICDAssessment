@@ -45,7 +45,7 @@ pipeline {
             steps {
              script {
                 withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                    sh 'docker tag spring-boot surajmurkute/assessmentcicd:1.0'
+                    sh 'docker tag assessmentcicd surajmurkute/assessmentcicd:1.0'
                     sh 'docker push surajmurkute/assessmentcicd:1.0'
                   }
               }
