@@ -20,7 +20,7 @@ pipeline {
         }
          stage('code analysis') {
             steps {
-              withSonarQubeEnv('sonarqube-server') {
+              withSonarQubeEnv('sonar-server') {
                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Java-Springboot \
                -Dsonar.java.binaries=. \
                -Dsonar.projectKey=Java-Springboot'''
@@ -36,7 +36,7 @@ pipeline {
             steps {
              script {
                  withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                    sh 'docker build -t assessmentcicd .'
+                    sh 'docker build -t ci-cd .'
                   }
               }
             }
@@ -45,12 +45,21 @@ pipeline {
             steps {
              script {
                 withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                    sh 'docker tag assessmentcicd surajmurkute/assessmentcicd:1.0'
-                    sh 'docker push surajmurkute/assessmentcicd:1.0'
+                    sh 'docker tag ci-cd surajmurkute/dev:1.0'
+                    sh 'docker push surajmurkute/dev:1.0'
                   }
               }
             }
          }    
+        stage('docker container') {
+            steps {
+             script {
+                   withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                    sh 'docker run -itd --name ci-cd-container -p 57:8080 ci-cd'
+                  }
+              }
+            }
+        }
         stage('docker compose') {
             steps {
              script {
@@ -61,7 +70,7 @@ pipeline {
             }
         }
 
-    }
+    }	
  
     post {
         always {
