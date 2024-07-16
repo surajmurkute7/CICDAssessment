@@ -1,34 +1,16 @@
-volumes:
-  spring-vol:
-    driver: local
-  calc-vol:
-    driver: local
-  health-vol:
-    driver: local
-  cafe-vol:
-    driver: local
+version: '3.0'
 services:
-  spring-service:
-    build: .
+  barista-service:
+    image: surajmurkute/cafe
     ports:
-      - 56:8080
-    volumes:
-      - spring-vol:/usr/src/myapp
-  cafe-service:
-    build: surajmurkute/cafe
-    ports:
-      - 32:8080
-    volumes:
-      - cafe-vol:/usr/src/cafe
+      - 11:80
+
   health-service:
-    build: surajmurkute/healthcenter
+    image: surajmurkute/healthcenter
     ports:
-      - 37:8080
-    volumes:
-      - health-vol:/usr/src/health
-  calc-service:
-    build: surajmurkute/calc
-    ports:
-      - 45:8080
-    volumes:
-      - calc-vol:/usr/src/calc
+      - 12:80
+
+  finance-service:
+   image: surajmurkute/calc
+   ports:
+     - 13:80
